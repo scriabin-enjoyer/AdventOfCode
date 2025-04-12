@@ -75,13 +75,16 @@ void parse_line(const char line[], unsigned dimensions[])
 
 long unsigned SA(unsigned dimensions[])
 {
-	unsigned x = dimensions[0];
-	unsigned y = dimensions[1];
-	unsigned z = dimensions[2];
-        unsigned a = x * y;
-        unsigned b = x * z;
-        unsigned c = z * y;
+        // dims
+	unsigned l = dimensions[0];
+	unsigned w = dimensions[1];
+	unsigned h = dimensions[2];
+        // area of sides
+        unsigned a = l * w;
+        unsigned b = l * h;
+        unsigned c = h * w;
+        // min side-area
 	unsigned min = (a <= b && a <= c) ? a : (b <= c) ? b : c;
-        printf("x: %d, y: %d, z: %d, min: %d\n", x, y, z, min);
-	return 2 * (x * y + x * z + y * z) + min;
+        printf("l: %d, w: %d, h: %d, min: %d\n", l, w, h, min);
+	return 2 * (a + b + c) + min;
 }
