@@ -11,13 +11,9 @@ int between(unsigned x, unsigned y, unsigned z);
 
 int main(void)
 {
-        // We'll do everything on the stack here because I don't know much about
-        // the heap tbh. It makes "more sense" to store lines from input on the
-        // heap because we don't know how long the input lines will be at
-        // compile time.
 	FILE *fp;
-	char line_buff[MAXLEN];         // "hopefully" big enough (I know it is)
-	unsigned parsed_nums[DIM];      // [l, w, h]
+	char line_buff[MAXLEN];
+	unsigned parsed_nums[DIM];
 	long unsigned total_ribbon = 0;
 
 	fp = fopen("input.txt", "r");
@@ -28,9 +24,7 @@ int main(void)
 	}
 
 	while (fgets(line_buff, sizeof(line_buff), fp) != NULL) {
-                printf("%s\n", line_buff);
                 parse_line(line_buff, parsed_nums);
-                printf("%d %d %d\n", parsed_nums[0], parsed_nums[1], parsed_nums[2]);
                 total_ribbon += ribbon_length(parsed_nums);
 
 	}
@@ -54,9 +48,8 @@ int main(void)
 // Split string on 'x' and convert to unsigned ints
 void parse_line(const char line[], unsigned dimensions[])
 {
-        // idek what a bounds check is
-	char ch;                // store current char
-	char num[MAXLEN];       // number builder
+	char ch;
+	char num[MAXLEN];
 	int line_pos = 0;
 	int num_pos = 0;
 	int dim_pos = 0;
@@ -73,7 +66,7 @@ void parse_line(const char line[], unsigned dimensions[])
         }
         // left overs
         num[num_pos] = '\0';
-        dimensions[dim_pos++] = (unsigned)atoi(num);
+        dimensions[dim_pos] = (unsigned)atoi(num);
 }
 
 long unsigned ribbon_length(unsigned dimensions[])
@@ -87,7 +80,7 @@ long unsigned ribbon_length(unsigned dimensions[])
         // min side-area
 	unsigned min_side = (l <= w && l <= h) ? l : (w <= h) ? w : h;
         unsigned mid_side = between(l, w, h) ? l : between(w, l, h) ? w : h;
-        printf("min: %d, mid: %d\n\n", min_side, mid_side);
+
 	return 2 * (min_side + mid_side) + vol;
 }
 

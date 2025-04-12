@@ -29,7 +29,6 @@ int main(void)
 	while (fgets(line_buff, sizeof(line_buff), fp) != NULL) {
                 parse_line(line_buff, parsed_nums);
                 total_paper += SA(parsed_nums);
-
 	}
 
 	if (feof(fp)) {
@@ -68,9 +67,9 @@ void parse_line(const char line[], unsigned dimensions[])
                 }
                 line_pos++;
         }
-        // left overs
+        // left overs; recall postfix increments above
         num[num_pos] = '\0';
-        dimensions[dim_pos++] = (unsigned)atoi(num);
+        dimensions[dim_pos] = (unsigned)atoi(num);
 }
 
 long unsigned SA(unsigned dimensions[])
@@ -85,6 +84,6 @@ long unsigned SA(unsigned dimensions[])
         unsigned c = h * w;
         // min side-area
 	unsigned min = (a <= b && a <= c) ? a : (b <= c) ? b : c;
-        printf("l: %d, w: %d, h: %d, min: %d\n", l, w, h, min);
+
 	return 2 * (a + b + c) + min;
 }
